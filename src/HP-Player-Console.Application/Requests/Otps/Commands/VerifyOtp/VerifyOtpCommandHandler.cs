@@ -5,20 +5,15 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Otps.Commands.VerifyOtp;
 
-public class VerifyOtpCommandHandler : IRequestHandler<VerifyOtpCommand, Unit>
+public class VerifyOtpCommandHandler(ICoreAccountApi coreAccountApi) : IRequestHandler<VerifyOtpCommand, Unit>
 {
-    private readonly ICoreApi _coreApi;
-
-    public VerifyOtpCommandHandler(ICoreApi coreApi)
-    {
-        _coreApi = coreApi;
-    }
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<Unit> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
     {
         var verifyRequest = new VerifyOtpRequest(request.ReferenceId, request.MobileNumber, request.OtpCode);
 
-        var response = await _coreApi.VerifyOTP(verifyRequest, cancellationToken);
+        var response = await _coreAccountApi.VerifyOTP(verifyRequest, cancellationToken);
 
         if (!response.Success)
         {

@@ -4,14 +4,9 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Accounts.Commands.UpdateUserPassword;
 
-public class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswordCommand, Unit>
+public class UpdateUserPasswordCommandHandler(ICoreAccountApi coreAccountApi) : IRequestHandler<UpdateUserPasswordCommand, Unit>
 {
-    private readonly ICoreApi _coreApi;
-
-    public UpdateUserPasswordCommandHandler(ICoreApi coreApi)
-    {
-        _coreApi = coreApi;
-    }
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<Unit> Handle(UpdateUserPasswordCommand request, CancellationToken cancellationToken)
     {
@@ -24,7 +19,7 @@ public class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswo
             ConfirmPassword = request.ConfirmPassword
         };
 
-        await _coreApi.UpdateUserPassword(updateRequest, cancellationToken);
+        await _coreAccountApi.UpdateUserPassword(updateRequest, cancellationToken);
         return Unit.Value;
     }
 }

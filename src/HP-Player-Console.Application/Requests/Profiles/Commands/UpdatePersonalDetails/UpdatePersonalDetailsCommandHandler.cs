@@ -3,17 +3,12 @@ using MediatR;
 
 namespace HP_Player_Console.Requests.Profiles.Commands.UpdatePersonalDetails;
 
-public class UpdatePersonalDetailsCommandHandler : IRequestHandler<UpdatePersonalDetailsCommand, object>
+public class UpdatePersonalDetailsCommandHandler(ICoreAccountApi coreAccountApi) : IRequestHandler<UpdatePersonalDetailsCommand, object>
 {
-    private readonly ICoreApi _coreApi;
-
-    public UpdatePersonalDetailsCommandHandler(ICoreApi coreApi)
-    {
-        _coreApi = coreApi;
-    }
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<object> Handle(UpdatePersonalDetailsCommand request, CancellationToken cancellationToken)
     {
-        return await _coreApi.UpdatePersonalDetails(request.Data, cancellationToken);
+        return await _coreAccountApi.UpdatePersonalDetails(request.Data, cancellationToken);
     }
 }

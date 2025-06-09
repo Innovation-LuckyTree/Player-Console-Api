@@ -6,12 +6,12 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Accounts.Queries.GetUserToken;
 
-public class GetAuthTokenQueryHandler(ICoreApi coreApi, ICoreIdentityApi coreIdentityApi) : IRequestHandler<GetAuthTokenQuery, LoginUserResponse>
+public class GetAuthTokenQueryHandler(ICoreAccountApi coreAccountApi, ICoreIdentityApi coreIdentityApi) : IRequestHandler<GetAuthTokenQuery, LoginUserResponse>
 {
     private const int _completeStatus = 7;
     private const int _noOfSecondsForVerification = 25920000;
     private readonly ICoreIdentityApi _coreIdentityApi = coreIdentityApi;
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<LoginUserResponse> Handle(GetAuthTokenQuery request, CancellationToken cancellationToken)
     {
@@ -19,7 +19,7 @@ public class GetAuthTokenQueryHandler(ICoreApi coreApi, ICoreIdentityApi coreIde
         if (!loginResponse.Success)
             return loginResponse;
 
-        var coreAccount = await _coreApi.FindPlayer(new FindPlayerRequest(loginResponse.Data.Id, loginResponse.Data.CompanyId), cancellationToken);
+        var coreAccount = await _coreAccountApi.FindPlayer(new FindPlayerRequest(loginResponse.Data.Id, loginResponse.Data.CompanyId), cancellationToken);
 
         if (coreAccount == null)
             return new LoginUserResponse { Success = false, ResponseCode = LoginExceptionCodes.INVALID_USER_TYPE, ErrorMessage = "Invalid user type!" };

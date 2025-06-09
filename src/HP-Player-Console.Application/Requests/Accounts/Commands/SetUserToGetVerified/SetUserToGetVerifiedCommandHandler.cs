@@ -1,5 +1,5 @@
 using HP_Player_Console.Application.Common.Exceptions;
-using HP_Player_Console.Infrastructure.Common.Models;
+using HP_Player_Console.Common.Models;
 using HP_Player_Console.Infrastructure.Core.Models.Requests.Accounts;
 using HP_Player_Console.Infrastructure.Interfaces;
 using MediatR;
@@ -7,12 +7,12 @@ using Microsoft.Extensions.Logging;
 
 namespace HP_Player_Console.Application.Requests.Accounts.Commands.SetUserToGetVerified;
 
-public class SetUserToGetVerifiedCommandHandler(ICoreApi coreApi, ILogger<SetUserToGetVerifiedCommandHandler> logger) : IRequestHandler<SetUserToGetVerifiedCommand, BaseApiResponse<bool>>
+public class SetUserToGetVerifiedCommandHandler(ICoreAccountApi coreApi, ILogger<SetUserToGetVerifiedCommandHandler> logger) : IRequestHandler<SetUserToGetVerifiedCommand, ApiResponseBase<bool>>
 {
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreApi = coreApi;
     private readonly ILogger<SetUserToGetVerifiedCommandHandler> _logger = logger;
 
-    public async Task<BaseApiResponse<bool>> Handle(SetUserToGetVerifiedCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponseBase<bool>> Handle(SetUserToGetVerifiedCommand request, CancellationToken cancellationToken)
     {
         var accountInfo = await _coreApi.AccountCurrent(cancellationToken);
 
@@ -29,7 +29,7 @@ public class SetUserToGetVerifiedCommandHandler(ICoreApi coreApi, ILogger<SetUse
             };
         }
 
-        return new BaseApiResponse<bool>()
+        return new ApiResponseBase<bool>()
         {
             Success = true,
             Data = true

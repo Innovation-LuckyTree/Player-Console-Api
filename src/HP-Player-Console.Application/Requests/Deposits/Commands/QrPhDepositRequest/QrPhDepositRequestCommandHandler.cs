@@ -4,14 +4,14 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Deposits.Commands.QrPhDepositRequest;
 
-public class QrPhDepositRequestCommandHandler(IPaymentServicesApi paymentService, ICoreApi coreApi) : IRequestHandler<QrPhDepositRequestCommand, object>
+public class QrPhDepositRequestCommandHandler(IPaymentServicesApi paymentService, ICoreAccountApi coreAccountApi) : IRequestHandler<QrPhDepositRequestCommand, object>
 {
     private readonly IPaymentServicesApi _paymentService = paymentService;
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<object> Handle(QrPhDepositRequestCommand request, CancellationToken cancellationToken)
     {
-        var currentAccount = await _coreApi.AccountCurrent(cancellationToken);
+        var currentAccount = await _coreAccountApi.AccountCurrent(cancellationToken);
 
         var result = await _paymentService.GenerateQR(new GenerateQRRequest(currentAccount.AccountObjectId, request.Amount), cancellationToken);
 

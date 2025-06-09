@@ -3,17 +3,12 @@ using MediatR;
 
 namespace HP_Player_Console.Requests.Profiles.Commands.UpdateProfessionCommand;
 
-public class UpdateProfessionCommandHandler : IRequestHandler<UpdateProfessionCommand, object>
+public class UpdateProfessionCommandHandler(ICoreAccountApi coreAccountApi) : IRequestHandler<UpdateProfessionCommand, object>
 {
-    private readonly ICoreApi _coreApi;
-
-    public UpdateProfessionCommandHandler(ICoreApi coreApi)
-    {
-        _coreApi = coreApi;
-    }
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<object> Handle(UpdateProfessionCommand request, CancellationToken cancellationToken)
     {
-        return await _coreApi.UpdateProfession(request.Data, cancellationToken);
+        return await _coreAccountApi.UpdateProfession(request.Data, cancellationToken);
     }
 }

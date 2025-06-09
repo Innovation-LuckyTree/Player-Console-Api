@@ -7,16 +7,16 @@ using Microsoft.Extensions.Logging;
 
 namespace HP_Player_Console.Application.Requests.Otps.Commands.GenerateOtp;
 
-public class GenerateOtpCommandHandler(ICoreApi coreApi, ILogger<GenerateOtpCommandHandler> logger) : IRequestHandler<GenerateOtpCommand, OtpResponse>
+public class GenerateOtpCommandHandler(ICoreAccountApi coreAccountApi, ILogger<GenerateOtpCommandHandler> logger) : IRequestHandler<GenerateOtpCommand, OtpResponse>
 {
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
     private readonly ILogger<GenerateOtpCommandHandler> _logger = logger;
 
     public async Task<OtpResponse> Handle(GenerateOtpCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _coreApi.GenerateOTP(request.MobileNumber, cancellationToken);
+            var result = await _coreAccountApi.GenerateOTP(request.MobileNumber, cancellationToken);
 
             return result;
         }

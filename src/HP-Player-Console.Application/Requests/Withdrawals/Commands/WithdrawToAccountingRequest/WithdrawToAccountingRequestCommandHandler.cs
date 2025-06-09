@@ -8,9 +8,9 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Withdrawals.Commands.WithdrawToAccountingRequest;
 
-public class WithdrawToAccountingRequestCommandHandler(ICoreApi coreApi, IMediator mediator) : IRequestHandler<WithdrawToAccountingRequestCommand, ApiBaseResponse<AccountBalanceResponse>>
+public class WithdrawToAccountingRequestCommandHandler(ICoreAccountApi coreAccountApi, IMediator mediator) : IRequestHandler<WithdrawToAccountingRequestCommand, ApiBaseResponse<AccountBalanceResponse>>
 {
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
     private readonly IMediator _mediator = mediator;
 
     public async Task<ApiBaseResponse<AccountBalanceResponse>> Handle(WithdrawToAccountingRequestCommand request, CancellationToken cancellationToken)
@@ -25,7 +25,7 @@ public class WithdrawToAccountingRequestCommandHandler(ICoreApi coreApi, IMediat
 
         createWithdrawalRequest.PaymentMethod = request.PaymentMethod.GetPaymentMethodName();
 
-        var accountWithdrawalTransaction = await _coreApi.CreateAccountWithdrawal(createWithdrawalRequest, cancellationToken);
+        var accountWithdrawalTransaction = await _coreAccountApi.CreateAccountWithdrawal(createWithdrawalRequest, cancellationToken);
 
         // return the result right away if not success
         if (!accountWithdrawalTransaction.Success)

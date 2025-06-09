@@ -7,15 +7,14 @@ using HP_Player_Console.Infrastructure.Core.Models.Responses.Profiles;
 using HP_Player_Console.Infrastructure.Interfaces;
 using MediatR;
 
-public class GetPersonalDetailsQueryHandler(ICoreApi coreApi, ICurrentUserService currentUserService) : IRequestHandler<GetPersonalDetailsQuery, UserDetailsResponse>
+public class GetPersonalDetailsQueryHandler(ICoreAccountApi coreAccountApi, ICurrentUserService currentUserService) : IRequestHandler<GetPersonalDetailsQuery, UserDetailsResponse>
 {
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
     private readonly ICurrentUserService _currentUserService = currentUserService;
-
 
     public async Task<UserDetailsResponse> Handle(GetPersonalDetailsQuery request, CancellationToken cancellationToken)
     {
-        var result = await _coreApi.GetUserById(_currentUserService.UserObjId, cancellationToken);
+        var result = await _coreAccountApi.GetUserById(_currentUserService.UserObjId, cancellationToken);
 
         return result;
     }

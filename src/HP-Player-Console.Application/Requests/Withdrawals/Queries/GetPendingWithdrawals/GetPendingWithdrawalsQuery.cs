@@ -1,5 +1,5 @@
-using MediatR;
+// using MediatR;
 
-namespace HP_Player_Console.Application.Requests.Withdrawals.Queries.GetPendingWithdrawals;
+// namespace HP_Player_Console.Application.Requests.Withdrawals.Queries.GetPendingWithdrawals;
 
-public class GetPendingWithdrawalsQuery : IRequest<PendingWithdrawalVm>;
+// public class GetPendingWithdrawalsQuery : IRequest<PendingWithdrawalVm>;

@@ -1,15 +1,19 @@
 using HP_Player_Console.Infrastructure.Core.Models.Requests.Announcements;
 using HP_Player_Console.Infrastructure.Core.Models.Requests.FileUploads;
 using HP_Player_Console.Infrastructure.Core.Models.Requests.SelfExclusion;
+using HP_Player_Console.Infrastructure.Core.Models.Responses.Company;
 using HP_Player_Console.Infrastructure.Core.Models.Responses.FileUploads;
 using HP_Player_Console.Infrastructure.Core.Models.Responses.Limits;
 using HP_Player_Console.Infrastructure.Core.Models.Responses.SelfExclusion;
+using HP_Player_Console.Infrastructure.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace HP_Player_Console.Infrastructure.Interfaces;
 
 public interface ICoreApi
 {
+    Task<ApiBaseResponse<CompanyResponse>> GetCompanyById(string companyid, CancellationToken cancellationToken);
+    Task<CompanyWalletSettingsResponse> GetWalletSettings(int companyId, CancellationToken cancellationToken);
     Task<UploadFileResponse> UploadImage(IFormFile fileRequest, CancellationToken cancellationToken);
     Task<UploadFileResponse> UploadBase64Image(UploadStringImage request, CancellationToken cancellationToken);
     Task<UploadFileResponse> GetImageByName(string fileName, CancellationToken cancellationToken);

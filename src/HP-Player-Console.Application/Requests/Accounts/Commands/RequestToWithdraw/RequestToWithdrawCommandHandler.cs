@@ -1,9 +1,7 @@
 using HP_Player_Console.Application.Common.Enums;
-using HP_Player_Console.Application.Common.Exceptions;
 using HP_Player_Console.Application.Requests.Accounts.Commands.WithdrawAccountBalance;
 using HP_Player_Console.Application.Requests.Limits.Queries.GetWalletLimit;
 using HP_Player_Console.Application.Requests.Withdrawals.Commands.WithdrawToAccountingRequest;
-using HP_Player_Console.Application.Requests.Withdrawals.Commands.WithdrawToAgentRequest;
 using HP_Player_Console.Infrastructure.AccountServices.Models.Responses;
 using HP_Player_Console.Infrastructure.Interfaces;
 using HP_Player_Console.Infrastructure.Models;
@@ -11,12 +9,12 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Accounts.Commands.RequestToWithdraw;
 
-public class RequestToWithdrawCommandHandler(IAccountServiceApi accountServiceApi, ICoreApi coreApi, IMediator mediator) : IRequestHandler<RequestToWithdrawCommand, ApiBaseResponse<AccountBalanceResponse>>
+public class RequestToWithdrawCommandHandler(IAccountServiceApi accountServiceApi, ICoreAccountApi coreAccountApi, IMediator mediator) : IRequestHandler<RequestToWithdrawCommand, ApiBaseResponse<AccountBalanceResponse>>
 {
     private readonly decimal _defaultLimit = 100000;
     private readonly decimal _maxWithdrawAtOnce = 100000;
     private readonly IAccountServiceApi _accountServiceApi = accountServiceApi;
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
     private readonly IMediator _mediator = mediator;
 
     public async Task<ApiBaseResponse<AccountBalanceResponse>> Handle(RequestToWithdrawCommand request, CancellationToken cancellationToken)
@@ -24,7 +22,7 @@ public class RequestToWithdrawCommandHandler(IAccountServiceApi accountServiceAp
         var result = new ApiBaseResponse<AccountBalanceResponse>();
 
         var walletSettings = await _mediator.Send(new GetWalletLimitQuery(), cancellationToken);
-        var accountInfo = await _coreApi.AccountCurrent(cancellationToken);
+        var accountInfo = await _coreAccountApi.AccountCurrent(cancellationToken);
         var currentAccountTransactions = await _accountServiceApi.GetCurrentAccountTransaction(cancellationToken);
 
         if (((currentAccountTransactions?.TotalCashOut ?? 0) + request.Amount) > (walletSettings?.MaximumWithdrawPerDay ?? _defaultLimit))
@@ -58,7 +56,6 @@ public class RequestToWithdrawCommandHandler(IAccountServiceApi accountServiceAp
         {
             PaymentMethodTypes.GCash => await _mediator.Send(new WithdrawAccountBalanceCommand(request.Amount), cancellationToken),
             PaymentMethodTypes.Cash => await _mediator.Send(new WithdrawToAccountingRequestCommand(request.Amount, accountInfo.AccountInfoId, request.PaymentMethod), cancellationToken),
-            PaymentMethodTypes.LoadingSystem => await _mediator.Send(new WithdrawToAgentRequestCommand(request.Amount, accountInfo.AccountInfoId, request.PaymentMethod), cancellationToken),
             _ => await _mediator.Send(new WithdrawAccountBalanceCommand(request.Amount), cancellationToken)
         };
     }

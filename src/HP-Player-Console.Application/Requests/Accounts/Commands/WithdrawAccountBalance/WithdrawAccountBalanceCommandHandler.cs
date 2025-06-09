@@ -1,6 +1,4 @@
 using HP_Player_Console.Application.Common.Constants;
-using HP_Player_Console.Application.Notifications.Transactions;
-using HP_Player_Console.Application.Requests.Accounts.Queries.GetCurrentAccount;
 using HP_Player_Console.Application.Requests.Limits.Queries.GetWalletLimit;
 using HP_Player_Console.Infrastructure.AccountServices.Models.Requests;
 using HP_Player_Console.Infrastructure.AccountServices.Models.Responses;
@@ -18,14 +16,14 @@ public class WithdrawAccountBalanceCommandHandler : IRequestHandler<WithdrawAcco
     private readonly decimal _defaultLimit = 100000;
     private readonly decimal _maxWithdrawAtOnce = 100000;
     private readonly IAccountServiceApi _accountServiceApi;
-    private readonly ICoreApi _coreApi;
+    private readonly ICoreAccountApi _coreAccountApi;
     private readonly ILogger<WithdrawAccountBalanceCommandHandler> _logger;
     private readonly IMediator _mediator;
 
-    public WithdrawAccountBalanceCommandHandler(IAccountServiceApi accountServiceApi, ICoreApi coreApi, ILogger<WithdrawAccountBalanceCommandHandler> logger, IMediator mediator)
+    public WithdrawAccountBalanceCommandHandler(IAccountServiceApi accountServiceApi, ICoreAccountApi coreAccountApi, ILogger<WithdrawAccountBalanceCommandHandler> logger, IMediator mediator)
     {
         _accountServiceApi = accountServiceApi;
-        _coreApi = coreApi;
+        _coreAccountApi = coreAccountApi;
         _logger = logger;
         _mediator = mediator;
     }
@@ -35,7 +33,7 @@ public class WithdrawAccountBalanceCommandHandler : IRequestHandler<WithdrawAcco
         var result = new ApiBaseResponse<AccountBalanceResponse>();
         int withdrawalStatus = WithdrawalTransactionStatuses.COMPLETE;
 
-        var accountInfo = await _coreApi.AccountCurrent(cancellationToken);
+        var accountInfo = await _coreAccountApi.AccountCurrent(cancellationToken);
         var walletSettings = await _mediator.Send(new GetWalletLimitQuery(), cancellationToken);
         var currentAccountTransactions = await _accountServiceApi.GetCurrentAccountTransaction(cancellationToken);
 
@@ -69,7 +67,7 @@ public class WithdrawAccountBalanceCommandHandler : IRequestHandler<WithdrawAcco
             AccountId = accountInfo.AccountInfoId
         };
 
-        var accountWithdrawalTransaction = await _coreApi.CreateAccountWithdrawal(createWithdrawalRequest, cancellationToken);
+        var accountWithdrawalTransaction = await _coreAccountApi.CreateAccountWithdrawal(createWithdrawalRequest, cancellationToken);
 
         if (!accountWithdrawalTransaction.Success)
         {
@@ -97,7 +95,7 @@ public class WithdrawAccountBalanceCommandHandler : IRequestHandler<WithdrawAcco
                 Status = 4 // FAILED 
             };
 
-            await _coreApi.UpdateWithdrawalStatus(updateWithdrawalStatus, cancellationToken);
+            await _coreAccountApi.UpdateWithdrawalStatus(updateWithdrawalStatus, cancellationToken);
 
             result.Success = false;
             result.ErrorMessage = "Failed to withdraw transaction";

@@ -4,18 +4,14 @@ using MediatR;
 
 namespace HP_Player_Console.Requests.SelfExclusion.Queries.GetActiveExclusion;
 
-public class GetActiveExclusionQueryHandler : IRequestHandler<GetActiveExclusionQuery, SelfExclusionVmResponse>
+public class GetActiveExclusionQueryHandler(ICoreApi coreApi, ICoreAccountApi coreApiAccount) : IRequestHandler<GetActiveExclusionQuery, SelfExclusionVmResponse>
 {
-    private readonly ICoreApi _coreApi;
-
-    public GetActiveExclusionQueryHandler(ICoreApi coreApi)
-    {
-        _coreApi = coreApi;
-    }
+    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreApiAccount = coreApiAccount;
 
     public async Task<SelfExclusionVmResponse> Handle(GetActiveExclusionQuery request, CancellationToken cancellationToken)
     {
-        var accountInfo = await _coreApi.AccountCurrent(cancellationToken);
+        var accountInfo = await _coreApiAccount.AccountCurrent(cancellationToken);
         return await _coreApi.GetActiveExlusion(accountInfo.AccountInfoId, cancellationToken);
     }
 }

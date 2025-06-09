@@ -8,4 +8,9 @@ public class AppConfig : IAppConfig
     public JwtConfig JwtConfig { get; set; }
     public ApiClientConfig CoreIdentityApiClient { get; set; }
     public ApiClientConfig CoreApiClient { get; set; }
+    public ApiClientConfig AccountServicesApiClient { get; set; }
+    public ApiClientConfig SupportApiClient { get; set; }
+    public ApiClientConfig PaymentServiceApiClient { get; set; }
+    public ApiClientConfig HubClientApi { get; set; }
+    public ApiClientConfig AddressApiClient { get; set; }
 }

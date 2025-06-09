@@ -7,16 +7,16 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Wallets.Queries.GetCashinHistory;
 
-public class GetCashinHistoryQueryHandler(IAccountServiceApi accountServiceApi, ICoreApi coreApi) : IRequestHandler<GetCashinHistoryQuery, ApiBaseResponse<WalletTransactionVm>>
+public class GetCashinHistoryQueryHandler(IAccountServiceApi accountServiceApi, ICoreAccountApi coreAccountApi) : IRequestHandler<GetCashinHistoryQuery, ApiBaseResponse<WalletTransactionVm>>
 {
     private readonly IAccountServiceApi _accountServiceApi = accountServiceApi;
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<ApiBaseResponse<WalletTransactionVm>> Handle(GetCashinHistoryQuery request, CancellationToken cancellationToken)
     {
         var response = new ApiBaseResponse<WalletTransactionVm>();
 
-        var account = await _coreApi.AccountCurrent(cancellationToken);
+        var account = await _coreAccountApi.AccountCurrent(cancellationToken);
 
         var searchTransactionRequest = new SearchTransactionRequest
         {

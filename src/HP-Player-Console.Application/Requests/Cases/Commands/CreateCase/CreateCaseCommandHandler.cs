@@ -6,15 +6,15 @@ using MediatR;
 
 namespace HappyPlay.Application.Requests.Cases.Commands.CreateCase;
 
-public class CreateCaseCommandHandler(ISupportClientApi supportApi, ICoreApi coreApi, ICurrentUserService currentUser) : IRequestHandler<CreateCaseCommand, object>
+public class CreateCaseCommandHandler(ISupportClientApi supportApi, ICoreAccountApi coreAccountApi, ICurrentUserService currentUser) : IRequestHandler<CreateCaseCommand, object>
 {
     private readonly ISupportClientApi _supportApi = supportApi;
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
     private readonly ICurrentUserService _currentUser = currentUser;
 
     public async Task<object> Handle(CreateCaseCommand request, CancellationToken cancellationToken)
     {
-        var accountInfo = await _coreApi.AccountCurrent(cancellationToken);
+        var accountInfo = await _coreAccountApi.AccountCurrent(cancellationToken);
 
         Owner owner = new()
         {

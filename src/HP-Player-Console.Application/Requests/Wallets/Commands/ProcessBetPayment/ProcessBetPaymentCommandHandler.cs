@@ -4,14 +4,9 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Wallets.Commands.ProcessBetCommand;
 
-public class ProcessBetPaymentCommandHandler : IRequestHandler<ProcessBetCommand, bool>
+public class ProcessBetPaymentCommandHandler(IAccountServiceApi accountServiceApi) : IRequestHandler<ProcessBetCommand, bool>
 {
-    private readonly IAccountServiceApi _accountServiceApi;
-
-    public ProcessBetPaymentCommandHandler(IAccountServiceApi accountServiceApi)
-    {
-        _accountServiceApi = accountServiceApi;
-    }
+    private readonly IAccountServiceApi _accountServiceApi = accountServiceApi;
 
     public async Task<bool> Handle(ProcessBetCommand request, CancellationToken cancellationToken)
     {
@@ -40,7 +35,6 @@ public class ProcessBetPaymentCommandHandler : IRequestHandler<ProcessBetCommand
             DateStarted = runningBonus.DateStarted,
             DateExpired = runningBonus.ExpirationDate
         };
-
 
         var betResponse = await _accountServiceApi.AddBetUsingBonusAccount(bonusBetRequest, cancellationToken);
 

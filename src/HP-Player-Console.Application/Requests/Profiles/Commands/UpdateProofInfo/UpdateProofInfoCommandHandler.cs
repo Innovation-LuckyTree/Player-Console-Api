@@ -4,15 +4,15 @@ using MediatR;
 
 namespace HP_Player_Console.Requests.Profiles.Commands.UpdateProofInfo;
 
-public class UpdateProofInfoCommandHandler(ICoreApi coreApi) : IRequestHandler<UpdateProofInfoCommand, object>
+public class UpdateProofInfoCommandHandler(ICoreAccountApi coreAccountApi) : IRequestHandler<UpdateProofInfoCommand, object>
 {
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<object> Handle(UpdateProofInfoCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            return await _coreApi.UpdateProofInfo(request.Data, cancellationToken);
+            return await _coreAccountApi.UpdateProofInfo(request.Data, cancellationToken);
         }
         catch(Exception ex)
         {

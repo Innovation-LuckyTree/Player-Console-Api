@@ -4,16 +4,16 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Wallets.Queries.GetWalletHistory;
 
-public class GetWalletHistoryQueryHandler(IAccountServiceApi accountServiceApi, ICoreApi coreApi) : IRequestHandler<GetWalletHistoryQuery, AccountDto>
+public class GetWalletHistoryQueryHandler(IAccountServiceApi accountServiceApi, ICoreAccountApi coreAccountApi) : IRequestHandler<GetWalletHistoryQuery, AccountDto>
 {
     private readonly IAccountServiceApi _accountServiceApi = accountServiceApi;
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
 
     public async Task<AccountDto> Handle(GetWalletHistoryQuery request, CancellationToken cancellationToken)
     {
         var searchString = GetSearchString(request.TransactionType);
 
-        var account = await _coreApi.AccountCurrent(cancellationToken);
+        var account = await _coreAccountApi.AccountCurrent(cancellationToken);
 
         var searchRequest = new SearchTransactionRequest
         {

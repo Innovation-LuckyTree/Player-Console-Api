@@ -1,29 +1,18 @@
-using HP_Player_Console.Infrastructure.Core.Models.Responses.Account;
 using HP_Player_Console.Infrastructure.Helpers;
 using HP_Player_Console.Infrastructure.Interfaces;
 using System.Net.Http.Json;
-using HP_Player_Console.Infrastructure.Core.Models.Requests.OTP;
-using HP_Player_Console.Infrastructure.Core.Models.Responses.OTP;
-using HP_Player_Console.Infrastructure.Core.Models.Requests.Accounts;
-using HP_Player_Console.Infrastructure.Core.Models.Responses.Orders;
-using HP_Player_Console.Infrastructure.Core.Models.Requests.Orders;
 using HP_Player_Console.Infrastructure.Models;
 using Microsoft.Extensions.Logging;
-using HP_Player_Console.Infrastructure.Core.Models.Requests.Withdrawals;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
-using HP_Player_Console.Infrastructure.Core.Models.Responses.Withdrawals;
 using System.Net;
 using HP_Player_Console.Infrastructure.Core.Models.Responses.SelfExclusion;
 using HP_Player_Console.Infrastructure.Core.Models.Requests.SelfExclusion;
-using HP_Player_Console.Infrastructure.Core.Models.Requests.Profiles;
 using HP_Player_Console.Infrastructure.Core.Models.Responses.FileUploads;
 using HP_Player_Console.Infrastructure.Core.Models.Requests.FileUploads;
-using HP_Player_Console.Infrastructure.Core.Models.Requests.Notifications;
-using HP_Player_Console.Infrastructure.Core.Models.Responses.Profiles;
-using HP_Player_Console.Infrastructure.Core.Models.Responses.Notifications;
 using HP_Player_Console.Infrastructure.Core.Models.Requests.Announcements;
 using HP_Player_Console.Infrastructure.Core.Models.Responses.Limits;
+using HP_Player_Console.Infrastructure.Core.Models.Responses.Company;
 
 namespace HP_Player_Console.Infrastructure.Core;
 
@@ -41,6 +30,33 @@ public class CoreApi : AbstractApiClient, ICoreApi
         _logger = logger;
     }
 
+    #region Company
+    public async Task<ApiBaseResponse<CompanyResponse>> GetCompanyById(string companyid, CancellationToken cancellationToken)
+    {
+        var response = await _client.GetAsync($"api/company/{companyid}", cancellationToken);
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("Connecting to core api was unsuccessful.");
+
+        var content = await response.Content.ReadFromJsonAsync<ApiBaseResponse<CompanyResponse>>(cancellationToken);
+        return content!;
+    }
+
+    public async Task<CompanyWalletSettingsResponse> GetWalletSettings(int companyId, CancellationToken cancellationToken)
+    {
+        var response = await _client.GetAsync($"api/wallet/settings?companyId={companyId}", cancellationToken);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errMessage = await response.Content.ReadAsStringAsync(cancellationToken);
+            _logger.LogError(errMessage);
+
+            return new();
+        }
+
+        var content = await response.Content.ReadFromJsonAsync<CompanyWalletSettingsResponse>(cancellationToken);
+        return content!;
+    }
+    #endregion
+
     #region Upload Image
     public async Task<UploadFileResponse> UploadImage(IFormFile fileRequest, CancellationToken cancellationToken)
     {
@@ -52,25 +68,25 @@ public class CoreApi : AbstractApiClient, ICoreApi
 
         var response = await _client.PostAsync($"api/upload", content, cancellationToken);
 
-        var respContent = await response.Content.ReadFromJsonAsync<UploadFileResponse>();
+        var respContent = await response.Content.ReadFromJsonAsync<UploadFileResponse>(cancellationToken);
         return respContent!;
     }
 
     public async Task<UploadFileResponse> UploadBase64Image(UploadStringImage request, CancellationToken cancellationToken)
     {
         var response = await _client.PostAsJsonAsync($"api/upload/base64image", request, cancellationToken);
-        var content = await response.Content.ReadFromJsonAsync<UploadFileResponse>();
+        var content = await response.Content.ReadFromJsonAsync<UploadFileResponse>(cancellationToken);
         return content!;
     }
 
     public async Task<UploadFileResponse> GetImageByName(string fileName, CancellationToken cancellationToken)
     {
         var response = await _client.GetAsync($"api/upload/{fileName}", cancellationToken);
-        var content = await response.Content.ReadFromJsonAsync<UploadFileResponse>();
+        var content = await response.Content.ReadFromJsonAsync<UploadFileResponse>(cancellationToken);
         return content!;
     }
     #endregion
-    
+
     #region Limits
 
     public async Task<AdminExclusionResponse> GetAccountAdminExclusion(long accountId, CancellationToken cancellationToken)
@@ -78,7 +94,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
         var response = await _client.GetAsync($"api/administrative/exclusion/account/{accountId}", cancellationToken);
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            return null;
+            return new();
         }
 
         var content = await response.Content.ReadFromJsonAsync<AdminExclusionResponse>(cancellationToken);
@@ -90,7 +106,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
         var response = await _client.GetAsync($"api/administrative/account/limit/{accountId}", cancellationToken);
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            return null;
+            return new(new(), new());
         }
 
         var content = await response.Content.ReadFromJsonAsync<AccountAdminLimitResponse>(cancellationToken);
@@ -102,7 +118,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
         var response = await _client.GetAsync($"api/administrative/self-limit/account/{accountId}", cancellationToken);
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            return null;
+            return new();
         }
 
         var content = await response.Content.ReadFromJsonAsync<SelfLimitResponse>(cancellationToken);
@@ -115,7 +131,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
     {
         var response = await _client.GetAsync($"api/livestream/{companyId}/latest", cancellationToken);
         if (!response.IsSuccessStatusCode)
-            return null;
+            return new();
 
         var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
         return content!;
@@ -127,7 +143,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
     {
         var response = await _client.PostAsJsonAsync($"api/announcement/active", request, cancellationToken);
         if (!response.IsSuccessStatusCode)
-            return null;
+            return new();
 
         var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
         return content!;
@@ -141,7 +157,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
         var response = await _client.GetAsync($"api/selfExclusion?AccountId={accountId}", cancellationToken);
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            return null;
+            return new();
         }
 
         var content = await response.Content.ReadFromJsonAsync<SelfExclusionVmResponse>(cancellationToken);
@@ -153,7 +169,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
         var response = await _client.PostAsJsonAsync($"api/selfExclusion", request, cancellationToken);
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            return null;
+            return new();
         }
 
         var content = await response.Content.ReadFromJsonAsync<SelfExclusionVmResponse>(cancellationToken);
@@ -165,7 +181,7 @@ public class CoreApi : AbstractApiClient, ICoreApi
         var response = await _client.PatchAsJsonAsync($"api/selfExclusion", request, cancellationToken);
         if (response.StatusCode != HttpStatusCode.OK)
         {
-            return null;
+            return new();
         }
 
         var content = await response.Content.ReadFromJsonAsync<SelfExclusionVmResponse>(cancellationToken);

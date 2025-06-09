@@ -4,14 +4,9 @@ using MediatR;
 
 namespace HP_Player_Console.Requests.SelfExclusion.Commands.UpdateActiveExclusion;
 
-public class UpdateActiveExclusionCommandHandler : IRequestHandler<UpdateActiveExclusionCommand, SelfExclusionVmResponse>
+public class UpdateActiveExclusionCommandHandler(ICoreApi coreApi) : IRequestHandler<UpdateActiveExclusionCommand, SelfExclusionVmResponse>
 {
-    private readonly ICoreApi _coreApi;
-
-    public UpdateActiveExclusionCommandHandler(ICoreApi coreApi)
-    {
-        _coreApi = coreApi;
-    }
+    private readonly ICoreApi _coreApi = coreApi;
 
     public async Task<SelfExclusionVmResponse> Handle(UpdateActiveExclusionCommand request, CancellationToken cancellationToken)
     {
