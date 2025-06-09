@@ -1,3 +1,4 @@
+using HP_Player_Console.Application.Requests.Accounts.Queries.GetUserToken;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
