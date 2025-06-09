@@ -1,7 +1,6 @@
 using HP_Player_Console.API.Controller;
 using HP_Player_Console.Application.Requests.Otps.Commands.GenerateOtp;
 using HP_Player_Console.Application.Requests.Otps.Commands.VerifyOtp;
-using HP_Player_Console.Application.Requests.Otps.Queries.GetPendingOtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

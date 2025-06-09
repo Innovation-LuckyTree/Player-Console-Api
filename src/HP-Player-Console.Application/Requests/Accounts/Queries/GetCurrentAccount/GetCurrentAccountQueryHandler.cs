@@ -3,20 +3,14 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Accounts.Queries.GetCurrentAccount;
 
-public class GetCurrentAccountQueryHandler : IRequestHandler<GetCurrentAccountQuery, AccountVm>
+public class GetCurrentAccountQueryHandler(ICoreAccountApi coreAccountApi, IAccountServiceApi accountServiceApi) : IRequestHandler<GetCurrentAccountQuery, AccountVm>
 {
-    private readonly ICoreApi _coreApi;
-    private readonly IAccountServiceApi _accountServiceApi;
-
-    public GetCurrentAccountQueryHandler(ICoreApi coreApi, IAccountServiceApi accountServiceApi)
-    {
-        _coreApi = coreApi;
-        _accountServiceApi = accountServiceApi;
-    }
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
+    private readonly IAccountServiceApi _accountServiceApi = accountServiceApi;
 
     public async Task<AccountVm> Handle(GetCurrentAccountQuery request, CancellationToken cancellationToken)
     {
-        var accountInfo = await _coreApi.AccountCurrent(cancellationToken);
+        var accountInfo = await _coreAccountApi.AccountCurrent(cancellationToken);
 
         var accountWallet = await _accountServiceApi.GetAccountBalanceByAccountId(accountInfo.AccountObjectId, cancellationToken);
         var accountCredits = await _accountServiceApi.GetAccountBalanceByAccountId(accountInfo.AccountCreditId, cancellationToken);

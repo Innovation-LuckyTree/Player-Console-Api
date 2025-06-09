@@ -1,5 +1,4 @@
 ﻿using HP_Player_Console.API.Controller;
-using HP_Player_Console.Application.Requests.Credits.Queries.GetCreditsHistory;
 using HP_Player_Console.Requests.SelfExclusion.Commands.CreateNewExclusion;
 using HP_Player_Console.Requests.SelfExclusion.Commands.UpdateActiveExclusion;
 using HP_Player_Console.Requests.SelfExclusion.Queries.GetActiveExclusion;

@@ -22,38 +22,38 @@ public class AccountController : ApiBaseController
         return Ok(response);
     }
 
-    [HttpGet("bonus")]
-    public async Task<IActionResult> GetAccountBonusHistory(CancellationToken cancellationToken)
-    {
-        var response = await Mediator.Send(new GetAccountBonusQuery(), cancellationToken);
+    // [HttpGet("bonus")]
+    // public async Task<IActionResult> GetAccountBonusHistory(CancellationToken cancellationToken)
+    // {
+    //     var response = await Mediator.Send(new GetAccountBonusQuery(), cancellationToken);
 
-        if (response == null)
-            return NotFound();
+    //     if (response == null)
+    //         return NotFound();
 
-        return Ok(response);
-    }
+    //     return Ok(response);
+    // }
 
-    [HttpGet("games")]
-    public async Task<IActionResult> GetAccountGames(CancellationToken cancellationToken)
-    {
-        var response = await Mediator.Send(new GetAccountGamesQuery(), cancellationToken);
+    // [HttpGet("games")]
+    // public async Task<IActionResult> GetAccountGames(CancellationToken cancellationToken)
+    // {
+    //     var response = await Mediator.Send(new GetAccountGamesQuery(), cancellationToken);
 
-        if (response == null)
-            return NotFound();
+    //     if (response == null)
+    //         return NotFound();
 
-        return Ok(response);
-    }
+    //     return Ok(response);
+    // }
 
-    [HttpGet("game/details")]
-    public async Task<IActionResult> GetAccountGameDetails(CancellationToken cancellationToken)
-    {
-        var response = await Mediator.Send(new GetAccountGameHistoryQuery(), cancellationToken);
+    // [HttpGet("game/details")]
+    // public async Task<IActionResult> GetAccountGameDetails(CancellationToken cancellationToken)
+    // {
+    //     var response = await Mediator.Send(new GetAccountGameHistoryQuery(), cancellationToken);
 
-        if (response == null)
-            return NotFound();
+    //     if (response == null)
+    //         return NotFound();
 
-        return Ok(response);
-    }
+    //     return Ok(response);
+    // }
 
     [HttpPost("withdraw")]
     public async Task<IActionResult> WithdrawAccountBalance(WithdrawAccountBalanceCommand request, CancellationToken cancellationToken)
@@ -83,21 +83,21 @@ public class AccountController : ApiBaseController
         return Ok(response);
     }
 
-    [HttpPost("transactions/wallet")]
-    public async Task<IActionResult> GetWalletTransactions(GetWalletTransactionsQuery request, CancellationToken cancellationToken)
-    {
-        var result = await Mediator.Send(request, cancellationToken);
+    // [HttpPost("transactions/wallet")]
+    // public async Task<IActionResult> GetWalletTransactions(GetWalletTransactionsQuery request, CancellationToken cancellationToken)
+    // {
+    //     var result = await Mediator.Send(request, cancellationToken);
 
-        return Ok(result);
-    }
+    //     return Ok(result);
+    // }
 
-    [HttpGet("pending/requests")]
-    public async Task<IActionResult> GetPendingRequestTransaction(CancellationToken cancellationToken)
-    {
-        var result = await Mediator.Send(new GetAccountPendingRequestsQuery(), cancellationToken);
+    // [HttpGet("pending/requests")]
+    // public async Task<IActionResult> GetPendingRequestTransaction(CancellationToken cancellationToken)
+    // {
+    //     var result = await Mediator.Send(new GetAccountPendingRequestsQuery(), cancellationToken);
 
-        return Ok(result);
-    }
+    //     return Ok(result);
+    // }
 
     [HttpPatch("get-verified")]
     public async Task<IActionResult> GetVerified(CancellationToken cancellationToken)

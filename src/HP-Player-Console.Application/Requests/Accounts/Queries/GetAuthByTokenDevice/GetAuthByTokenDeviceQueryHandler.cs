@@ -7,11 +7,11 @@ using MediatR;
 
 namespace HP_Player_Console.Application.Requests.Accounts.Queries.GetAuthByTokenDevice;
 
-public class GetAuthByTokenDeviceQueryHandler(ICoreApi coreApi, ICoreIdentityApi coreIdentityApi) : IRequestHandler<GetAuthByTokenDeviceQuery, LoginUserResponse>
+public class GetAuthByTokenDeviceQueryHandler(ICoreAccountApi coreAccountApi, ICoreIdentityApi coreIdentityApi) : IRequestHandler<GetAuthByTokenDeviceQuery, LoginUserResponse>
 {
     private const int _completeStatus = 7;
     private const int _noOfSecondsForVerification = 25920000;
-    private readonly ICoreApi _coreApi = coreApi;
+    private readonly ICoreAccountApi _coreAccountApi = coreAccountApi;
     private readonly ICoreIdentityApi _coreIdentityApi = coreIdentityApi;
 
     public async Task<LoginUserResponse> Handle(GetAuthByTokenDeviceQuery request, CancellationToken cancellationToken)
@@ -19,7 +19,7 @@ public class GetAuthByTokenDeviceQueryHandler(ICoreApi coreApi, ICoreIdentityApi
         var tokenRequest = new AuthDeviceTokenRequest(request.UserId, request.TokenId, request.Key, request.IpAddress);
 
         var userTokenResponse = await _coreIdentityApi.LoginUserByTokenDevice(tokenRequest, cancellationToken);
-        var coreAccount = await _coreApi.FindPlayer(new FindPlayerRequest(userTokenResponse.Data.Id, userTokenResponse.Data.CompanyId), cancellationToken);
+        var coreAccount = await _coreAccountApi.FindPlayer(new FindPlayerRequest(userTokenResponse.Data.Id, userTokenResponse.Data.CompanyId), cancellationToken);
 
         if (coreAccount == null)
         {
