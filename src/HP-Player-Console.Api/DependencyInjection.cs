@@ -67,8 +67,6 @@ public static class DependencyInjection
             });
         });
 
-        builder.Services.AddAuthentication();
-
         builder.Services.AddControllers(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())
             .AddFluentValidation();

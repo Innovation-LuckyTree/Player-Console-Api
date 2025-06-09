@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 
+builder.AddAppBuilder();
+
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.ConfigureHttpsDefaults(httpsOptions =>

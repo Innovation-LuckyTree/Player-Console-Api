@@ -396,4 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-HappyPlay.GameGateway.API/appsettings.Kenneth.json
+HP_Player_Console.GameGateway.API/appsettings.Kenneth.json

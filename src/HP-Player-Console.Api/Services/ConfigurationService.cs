@@ -3,7 +3,6 @@ using HP_Player_Console.Infrastructure.Config.Models;
 using HP_Player_Console.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 
 namespace HP_Player_Console.API;
 
@@ -33,6 +32,8 @@ public static class ConfigurationServices
                     ValidateIssuerSigningKey = false
                 };
             });
+
+        services.AddAuthorization();
 
         return services;
     }
