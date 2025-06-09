@@ -1,4 +1,5 @@
 using HP_Player_Console.API;
+using System.Security.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 

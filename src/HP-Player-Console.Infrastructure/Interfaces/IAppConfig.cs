@@ -1,6 +1,6 @@
 using HP_Player_Console.Infrastructure.Config.Models;
 
-namespace Badger.Web.Infrastructure.Interfaces;
+namespace HP_Player_Console.Infrastructure.Interfaces;
 
 public interface IAppConfig
 {

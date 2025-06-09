@@ -20,9 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HP_Player_Console.Application\HP_Player_Console.Application.csproj" />
-    <ProjectReference Include="..\HP_Player_Console.Common\HP_Player_Console.Common.csproj" />
-    <ProjectReference Include="..\HP_Player_Console.Infrastructure\HP_Player_Console.Infrastructure.csproj" />
+    <ProjectReference Include="..\HP-Player-Console.Application\HP-Player-Console.Application.csproj" />
   </ItemGroup>
 
 </Project>
