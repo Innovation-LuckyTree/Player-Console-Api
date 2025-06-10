@@ -7,14 +7,9 @@ using System.Security.Claims;
 
 namespace HP_Player_Console.API.Services;
 
-public class CurrentUserService : ICurrentUserService
+public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
 {
-    private IHttpContextAccessor _httpContextAccessor;
-
-    public CurrentUserService(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
+    private IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
     private string GetClaimValueByKey(string key)
     {
@@ -59,6 +54,7 @@ public class CurrentUserService : ICurrentUserService
             return GetClaimValueByKey("nameid");
         }
     }
+
     public Guid UserObjId
     {
         get
@@ -66,6 +62,15 @@ public class CurrentUserService : ICurrentUserService
             return new Guid(GetClaimValueByKey("nameid"));
         }
     }
+
+    public Guid LogId
+    {
+        get
+        {
+            return new Guid(GetClaimValueByKey("log_id"));
+        }
+    }
+
     public string AuthenticationBearer
     {
         get

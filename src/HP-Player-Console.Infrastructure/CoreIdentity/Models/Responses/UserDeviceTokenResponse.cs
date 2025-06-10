@@ -2,8 +2,8 @@ using HP_Player_Console.Infrastructure.Models;
 
 namespace HP_Player_Console.Infrastructure.CoreIdentity.Models.Responses;
 
-public class UserDeviceTokenResponse : ApiBaseResponse<UserDeviceTokenInfo>
-{}
+public class UserDeviceTokenResponse : ApiBaseResponse<UserDeviceTokenInfo>;
+
 public class UserDeviceTokenInfo
 {
     public Guid DeviceTokenId { get; set; }

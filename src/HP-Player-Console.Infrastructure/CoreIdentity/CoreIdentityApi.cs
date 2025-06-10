@@ -96,7 +96,24 @@ public class CoreIdentityApi : AbstractApiClient, ICoreIdentityApi
         if (!response.IsSuccessStatusCode)
             return new UserDeviceTokenResponse { Success = false, ResponseCode = "002", ErrorMessage = "Failed to process Refresh Token" };
 
-        var content = await response.Content.ReadFromJsonAsync<UserDeviceTokenInfo>();
+        var content = await response.Content.ReadFromJsonAsync<UserDeviceTokenInfo>(cancellationToken);
         return new UserDeviceTokenResponse { Data = content! };
+    }
+
+    public async Task<UserAccessTokenResponse> GetUserAccessToken(Guid userId, Guid logId, CancellationToken cancellationToken)
+    {
+        var url = $"/api/users/{userId}/access-token?logId={logId}";
+        var response = await _client.GetAsync(url, cancellationToken);
+        if (response.StatusCode == HttpStatusCode.BadRequest)
+        {
+            var errContent = await response.Content.ReadFromJsonAsync<BadRequestResponse>(cancellationToken);
+            return new UserAccessTokenResponse { Success = false, ResponseCode = "003", ErrorMessage = errContent.Detail };
+        }
+
+        if (!response.IsSuccessStatusCode)
+            return new UserAccessTokenResponse { Success = false, ResponseCode = "003", ErrorMessage = "Failed to Get User Access Token" };
+
+        var result = await response.Content.ReadFromJsonAsync<UserAccessTokenResponse>(cancellationToken);
+        return result!;
     }
 }

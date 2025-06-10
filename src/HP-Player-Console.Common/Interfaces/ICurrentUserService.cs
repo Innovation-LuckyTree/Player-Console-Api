@@ -6,4 +6,5 @@ public interface ICurrentUserService
     string AuthenticationBearer { get; }
     string CompanyId { get; }
     Guid UserObjId { get; }
+    Guid LogId { get; }
 }

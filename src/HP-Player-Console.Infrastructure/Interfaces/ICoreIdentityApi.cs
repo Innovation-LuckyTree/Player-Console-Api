@@ -9,4 +9,5 @@ public interface ICoreIdentityApi
     Task<LoginUserResponse> LoginUserByTokenDevice(AuthDeviceTokenRequest request, CancellationToken cancellationToken);
     Task<LoginUserResponse> GetRefreshToken(string token, string refreshToken, CancellationToken cancellationToken);
     Task<UserDeviceTokenResponse> CreateUserDeviceToken(CreateUserDeviceTokenRequest request, CancellationToken cancellationToken);
+    Task<UserAccessTokenResponse> GetUserAccessToken(Guid userId, Guid logId, CancellationToken cancellationToken);
 }

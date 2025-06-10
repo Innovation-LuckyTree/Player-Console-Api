@@ -1,5 +1,6 @@
 using HP_Player_Console.Application.Requests.Accounts.Queries.GetAuthByTokenDevice;
 using HP_Player_Console.Application.Requests.Accounts.Queries.GetRefreshToken;
+using HP_Player_Console.Application.Requests.Accounts.Queries.GetUserAccessToken;
 using HP_Player_Console.Application.Requests.Accounts.Queries.GetUserToken;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,18 @@ public class AuthController : ApiBaseController
     public async Task<IActionResult> RefreshToken([FromBody] GetRefreshTokenQuery request, CancellationToken cancellationToken)
     {
         var response = await Mediator.Send(request, cancellationToken);
+
+        if (!response.Success)
+            return BadRequest(response);
+
+        return Ok(response);
+    }
+
+
+    [HttpGet("user/access-token")]
+    public async Task<IActionResult> GetUserAccessToken(CancellationToken cancellationToken)
+    {
+        var response = await Mediator.Send(new GetUserAccessTokenQuery(), cancellationToken);
 
         if (!response.Success)
             return BadRequest(response);
