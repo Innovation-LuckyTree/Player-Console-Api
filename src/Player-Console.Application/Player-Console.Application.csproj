@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HP-Player-Console.Common\HP-Player-Console.Common.csproj" />
-    <ProjectReference Include="..\HP-Player-Console.Infrastructure\HP-Player-Console.Infrastructure.csproj" />
+    <ProjectReference Include="..\Player-Console.Common\Player-Console.Common.csproj" />
+    <ProjectReference Include="..\Player-Console.Infrastructure\Player-Console.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HP-Player-Console.Application\HP-Player-Console.Application.csproj" />
+    <ProjectReference Include="..\Player-Console.Application\Player-Console.Application.csproj" />
   </ItemGroup>
 
 </Project>

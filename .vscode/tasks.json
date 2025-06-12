@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/HP-Player-Console-Api.sln",
+                "${workspaceFolder}/Player-Console-Api.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/HP-Player-Console-Api.sln",
+                "${workspaceFolder}/Player-Console-Api.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/HP-Player-Console-Api.sln"
+                "${workspaceFolder}/Player-Console-Api.sln"
             ],
             "problemMatcher": "$msCompile"
         }

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HP-Player-Console.Common\HP-Player-Console.Common.csproj" />
+    <ProjectReference Include="..\Player-Console.Common\Player-Console.Common.csproj" />
   </ItemGroup>
 
 </Project>

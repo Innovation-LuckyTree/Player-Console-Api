@@ -1,6 +1,6 @@
 
 UAT
-docker build -t registry.gitlab.com/happyplay/happy-play/uat-hp-console-api:v1.0.0 .
+docker build -t registry.gitlab.com/happyplay/happy-play/uat-hp-console-api:v1.0.1 .
 
 
 PROD

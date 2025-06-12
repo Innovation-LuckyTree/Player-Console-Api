@@ -5,13 +5,13 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HP-Player-Console.Api", "src\HP-Player-Console.Api\HP-Player-Console.Api.csproj", "{6C919932-0599-40B9-A9E0-BBB13C38B3D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player-Console.Api", "src\Player-Console.Api\Player-Console.Api.csproj", "{6C919932-0599-40B9-A9E0-BBB13C38B3D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HP-Player-Console.Application", "src\HP-Player-Console.Application\HP-Player-Console.Application.csproj", "{77FA4CE5-7608-4A09-83FB-ED3A528C698A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player-Console.Application", "src\Player-Console.Application\Player-Console.Application.csproj", "{77FA4CE5-7608-4A09-83FB-ED3A528C698A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HP-Player-Console.Common", "src\HP-Player-Console.Common\HP-Player-Console.Common.csproj", "{6A7E22A9-8818-4EDA-BDFC-4DC10E890712}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player-Console.Common", "src\Player-Console.Common\Player-Console.Common.csproj", "{6A7E22A9-8818-4EDA-BDFC-4DC10E890712}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HP-Player-Console.Infrastructure", "src\HP-Player-Console.Infrastructure\HP-Player-Console.Infrastructure.csproj", "{CF0647A1-2DD0-4BC0-9107-CB3ED56B4F60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player-Console.Infrastructure", "src\Player-Console.Infrastructure\Player-Console.Infrastructure.csproj", "{CF0647A1-2DD0-4BC0-9107-CB3ED56B4F60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

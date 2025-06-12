@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/HP-Player-Console.Api/bin/Debug/net9.0/HP-Player-Console.Api.dll",
+            "program": "${workspaceFolder}/src/Player-Console.Api/bin/Debug/net9.0/Player-Console.Api.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/HP-Player-Console.Api",
+            "cwd": "${workspaceFolder}/src/Player-Console.Api",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

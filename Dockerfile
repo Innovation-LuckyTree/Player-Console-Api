@@ -4,17 +4,17 @@ WORKDIR /app
 
 # Copy the solution file and individual project files 
 COPY src/src.sln .
-COPY src/HP-Player-Console.Api/ HP-Player-Console.Api/
-COPY src/HP-Player-Console.Application/ HP-Player-Console.Application/
-COPY src/HP-Player-Console.Common/ HP-Player-Console.Common/
-COPY src/HP-Player-Console.Infrastructure/ HP-Player-Console.Infrastructure/
+COPY src/Player-Console.Api/ Player-Console.Api/
+COPY src/Player-Console.Application/ Player-Console.Application/
+COPY src/Player-Console.Common/ Player-Console.Common/
+COPY src/Player-Console.Infrastructure/ Player-Console.Infrastructure/
 # Restore NuGet packages for the entire solution
 RUN dotnet restore
 
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish HP-Player-Console.Api -c Release -o out
+RUN dotnet publish Player-Console.Api -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
@@ -23,5 +23,5 @@ COPY --from=build-env /app/out .
 
 Expose 8080
 
-ENTRYPOINT ["dotnet", "HP-Player-Console.Api.dll"]
+ENTRYPOINT ["dotnet", "Player-Console.Api.dll"]
 
