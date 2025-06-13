@@ -13,4 +13,5 @@ public interface IAppConfig
     ApiClientConfig PaymentServiceApiClient { get; set; }
     ApiClientConfig HubClientApi { get; set; }
     ApiClientConfig AddressApiClient { get; set; }
+    HuiduConfig HuiduClientApi { get; set; }
 }

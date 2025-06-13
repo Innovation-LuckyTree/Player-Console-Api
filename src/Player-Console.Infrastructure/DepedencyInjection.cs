@@ -4,6 +4,7 @@ using HP_Player_Console.Infrastructure.Core;
 using HP_Player_Console.Infrastructure.CoreIdentity;
 using HP_Player_Console.Infrastructure.Helpers;
 using HP_Player_Console.Infrastructure.HubClient;
+using HP_Player_Console.Infrastructure.HuiduClient;
 using HP_Player_Console.Infrastructure.Interfaces;
 using HP_Player_Console.Infrastructure.PaymentServices;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,6 +52,9 @@ public static class DepedencyInjection
             .ConfigurePrimaryHttpMessageHandler(PrimaryHttpClientHandlerFactory.CreateHttpClientHandler);
 
         services.AddHttpClient<IAddressServicesApi, AddressServicesApi>()
+            .ConfigurePrimaryHttpMessageHandler(PrimaryHttpClientHandlerFactory.CreateHttpClientHandler);
+
+        services.AddHttpClient<IHuiduClientApi, HuiduClientApi>()
             .ConfigurePrimaryHttpMessageHandler(PrimaryHttpClientHandlerFactory.CreateHttpClientHandler);
 
         return services;

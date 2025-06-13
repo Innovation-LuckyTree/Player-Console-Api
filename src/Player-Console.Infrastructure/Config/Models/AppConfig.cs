@@ -13,4 +13,5 @@ public class AppConfig : IAppConfig
     public ApiClientConfig PaymentServiceApiClient { get; set; }
     public ApiClientConfig HubClientApi { get; set; }
     public ApiClientConfig AddressApiClient { get; set; }
+    public HuiduConfig HuiduClientApi { get; set; }
 }
