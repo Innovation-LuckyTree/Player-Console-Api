@@ -9,6 +9,6 @@ public class GetGameByGameIdQueryHandler(IHuiduClientApi huiduClientApi) : IRequ
 
     public async Task<string> Handle(GetGameByGameIdQuery request, CancellationToken cancellationToken)
     {
-        return await _huiduClientApi.GetGame("h6e466ABC", request.GameId, "100.00", cancellationToken);
+        return await _huiduClientApi.GetGame($"h6e466{Guid.NewGuid().ToString().Replace("-", "")[..10]}", request.GameId, "100.00", cancellationToken);
     }
 }

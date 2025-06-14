@@ -18,8 +18,8 @@ public class GetGamesListQueryHandler(IHuiduClientApi huiduClientApi) : IRequest
         return
         [
             new() {
-                GameId = "e58e145313cf8c3a41a2240c1579b735",
-                GameName = "Baccarat Lobby",
+                GameId = "c3d9125886cdd573a4404e6121877754",
+                GameName = "Aztec Treasure Hunt",
                 GameType = "Casino"
             },
             new() {
