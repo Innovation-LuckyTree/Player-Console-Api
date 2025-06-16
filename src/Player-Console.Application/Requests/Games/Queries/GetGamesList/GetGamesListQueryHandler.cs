@@ -61,6 +61,16 @@ public class GetGamesListQueryHandler(IHuiduClientApi huiduClientApi) : IRequest
                 GameId = "e1d2da140286507e851fde1cb2fdd4ba",
                 GameName = "Gold Party 2 – After Hours",
                 GameType = "Slot"
+            },
+            new() {
+                GameId = "bdfb23c974a2517198c5443adeea77a8",
+                GameName = "Super Ace",
+                GameType = "Slot"
+            },
+            new() {
+                GameId = "29c66f73e3916b8eb18c2bf78886927d",
+                GameName = "Super Ace Joker",
+                GameType = "Slot"
             }
         ];
     }
