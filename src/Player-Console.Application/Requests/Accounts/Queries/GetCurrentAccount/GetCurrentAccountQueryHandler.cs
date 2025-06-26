@@ -12,11 +12,10 @@ public class GetCurrentAccountQueryHandler(ICoreAccountApi coreAccountApi, IAcco
     {
         var accountInfo = await _coreAccountApi.AccountCurrent(cancellationToken);
 
-        var accountWallet = await _accountServiceApi.GetAccountBalanceByAccountId(accountInfo.AccountObjectId, cancellationToken);
         var accountCredits = await _accountServiceApi.GetAccountBalanceByAccountId(accountInfo.AccountCreditId, cancellationToken);
         var bonusAccount = await _accountServiceApi.GetBonusAccount(accountInfo.AccountBonusId, cancellationToken);
 
-        return new AccountVm(accountInfo, accountWallet, accountCredits, bonusAccount);
+        return new AccountVm(accountInfo, accountCredits, bonusAccount);
     }
 }
 
