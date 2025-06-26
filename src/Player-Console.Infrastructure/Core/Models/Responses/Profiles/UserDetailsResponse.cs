@@ -17,9 +17,11 @@ public class UserProfileData
     public int BranchId { get; set; }
     public string Branch { get; set; }
 
+    public string UserName { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string MiddleName { get; set; }
+    public string Suffix { get; set; }
     public string Email { get; set; }
     public int Age { get; set; }
     public string Gender { get; set; }
@@ -39,6 +41,9 @@ public class UserProfileData
     public string ProfilePath { get; set; }
     public string SelfiePath { get; set; }
     public DateTime? CreatedOn { get; set; }
+    public bool IsActive { get; set; }
+    public bool IsVerified { get; set; }
+    public bool IsDeclined { get; set; }
 
     public int RoleId { get; set; }
     public string RoleName { get; set; }
