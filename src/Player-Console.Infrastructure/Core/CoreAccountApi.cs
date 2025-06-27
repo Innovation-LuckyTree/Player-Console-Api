@@ -232,4 +232,11 @@ public class CoreAccountApi : AbstractApiClient, ICoreAccountApi
 
         return content!;
     }
+
+    public async Task<object> BasicVerification(BasicVerificationRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _client.PatchAsJsonAsync($"api/user/basic/verification", request, cancellationToken);
+        var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
+        return content!;
+    }
 }

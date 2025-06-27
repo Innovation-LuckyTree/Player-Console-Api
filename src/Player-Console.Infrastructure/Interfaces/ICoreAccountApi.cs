@@ -32,4 +32,5 @@ public interface ICoreAccountApi
     Task<object> UpdateProfession(UpdateProfessionRequest request, CancellationToken cancellationToken);
     Task<object> UpdateProfileImage(UpdateProfileImageRequest request, CancellationToken cancellationToken);
     Task<object> BasicUserRegistration(BasicUserRegistration request, CancellationToken cancellationToken);
+    Task<object> BasicVerification(BasicVerificationRequest request, CancellationToken cancellationToken);
 }
