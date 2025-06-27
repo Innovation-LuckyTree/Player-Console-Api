@@ -25,4 +25,7 @@ public interface ICoreApi
     Task<SelfExclusionVmResponse> GetActiveExlusion(long accountId, CancellationToken cancellationToken);
     Task<SelfExclusionVmResponse> CreateSelfExclusion(SelfExclusionRequest request, CancellationToken cancellationToken);
     Task<SelfExclusionVmResponse> UpdateActiveExclusion(SelfExclusionRequest request, CancellationToken cancellationToken);
+    Task<object> GetGameCategories(CancellationToken cancellationToken);
+    Task<object> GetProviderByCategoryId(int categoryId, CancellationToken cancellationToken);
+    Task<object> GetGamesByCategoryAndProvider(int categoryId, int providerId, int pageNumber, int pageSize, CancellationToken cancellationToken);
 }

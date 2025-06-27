@@ -188,4 +188,36 @@ public class CoreApi : AbstractApiClient, ICoreApi
         return content!;
     }
     #endregion
+
+    #region Games
+    public async Task<object> GetGameCategories(CancellationToken cancellationToken)
+    {
+        var response = await _client.GetAsync($"api/gamecatalog/categories", cancellationToken);
+        if (!response.IsSuccessStatusCode)
+            return new();
+
+        var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
+        return content!;
+    }
+
+    public async Task<object> GetProviderByCategoryId(int categoryId, CancellationToken cancellationToken)
+    {
+        var response = await _client.GetAsync($"api/gamecatalog/{categoryId}/providers", cancellationToken);
+        if (!response.IsSuccessStatusCode)
+            return new();
+
+        var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
+        return content!;
+    }
+
+    public async Task<object> GetGamesByCategoryAndProvider(int categoryId, int providerId, int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        var response = await _client.GetAsync($"api/gamecatalog/games/{categoryId}/{providerId}/{categoryId}?pageNumber={pageNumber}&pageSize={pageSize}", cancellationToken);
+        if (!response.IsSuccessStatusCode)
+            return new();
+
+        var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
+        return content!;
+    }
+    #endregion
 }

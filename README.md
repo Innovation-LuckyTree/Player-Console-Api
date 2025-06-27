@@ -1,6 +1,6 @@
 
 UAT
-docker build -t registry.gitlab.com/innovision2/luckytree/dev-player-console-api:v1.0.0 .
+docker build -t registry.gitlab.com/innovision2/luckytree/dev-player-console-api:v1.0.2 .
 
 
 PROD
