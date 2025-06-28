@@ -4,6 +4,7 @@ using HP_Player_Console.Application.Requests.Games.Queries.GetGameCategories;
 using HP_Player_Console.Application.Requests.Games.Queries.GetGameProviderList;
 using HP_Player_Console.Application.Requests.Games.Queries.GetGamesByProviderAndCategory;
 using HP_Player_Console.Application.Requests.Games.Queries.GetHuiduGames;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HP_Player_Console.API.Controllers;
@@ -27,6 +28,7 @@ public class GamesController(ILogger<GamesController> logger) : ApiBaseControlle
     }
 
     [HttpGet("{categoryId}/providers")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetGameProviders(int categoryId, [FromForm] bool isFavorite, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(new GetGameProviderListQuery(categoryId, isFavorite), cancellationToken);
@@ -34,7 +36,8 @@ public class GamesController(ILogger<GamesController> logger) : ApiBaseControlle
         return Ok(result);
     }
 
-    [HttpGet("games/{gameCategoryId}/{providerId}")]
+    [HttpGet("{gameCategoryId}/{providerId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetGameProviderByCategoryId(int gameCategoryId, int providerId, [FromQuery] int pageNumber, [FromQuery] int pageSize, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(new GetGamesByProviderAndCategoryQuery(gameCategoryId, providerId, pageNumber, pageSize), cancellationToken);

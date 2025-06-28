@@ -212,7 +212,8 @@ public class CoreApi : AbstractApiClient, ICoreApi
 
     public async Task<object> GetGamesByCategoryAndProvider(int categoryId, int providerId, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        var response = await _client.GetAsync($"api/gamecatalog/games/{categoryId}/{providerId}/{categoryId}?pageNumber={pageNumber}&pageSize={pageSize}", cancellationToken);
+        var url = $"api/gamecatalog/games/{categoryId}/{providerId}?pageNumber={pageNumber}&pageSize={pageSize}";
+        var response = await _client.GetAsync(url, cancellationToken);
         if (!response.IsSuccessStatusCode)
             return new();
 
