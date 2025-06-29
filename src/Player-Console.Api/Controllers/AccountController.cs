@@ -3,6 +3,7 @@ using HP_Player_Console.Application.Requests.Accounts.Commands.RequestToWithdraw
 using HP_Player_Console.Application.Requests.Accounts.Commands.SetUserToGetVerified;
 using HP_Player_Console.Application.Requests.Accounts.Commands.UpdateUserPassword;
 using HP_Player_Console.Application.Requests.Accounts.Commands.WithdrawAccountBalance;
+using HP_Player_Console.Application.Requests.Accounts.Queries.GetAccountCreditBalance;
 using HP_Player_Console.Application.Requests.Accounts.Queries.GetCurrentAccount;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,17 @@ public class AccountController : ApiBaseController
     public async Task<IActionResult> AccountCurrent(CancellationToken cancellationToken)
     {
         var response = await Mediator.Send(new GetCurrentAccountQuery(), cancellationToken);
+
+        if (response == null)
+            return NotFound();
+
+        return Ok(response);
+    }
+
+    [HttpGet("credit/balance")]
+    public async Task<IActionResult> AccountCreditBalance([FromQuery] GetAccountCreditBalanceQuery query, CancellationToken cancellationToken)
+    {
+        var response = await Mediator.Send(query, cancellationToken);
 
         if (response == null)
             return NotFound();

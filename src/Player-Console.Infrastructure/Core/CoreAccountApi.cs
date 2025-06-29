@@ -239,4 +239,11 @@ public class CoreAccountApi : AbstractApiClient, ICoreAccountApi
         var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
         return content!;
     }
+
+    public async Task<object> BasicUserUpdate(BasicUpdateUserRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _client.PatchAsJsonAsync($"api/user/basic/update", request, cancellationToken);
+        var content = await response.Content.ReadFromJsonAsync<object>(cancellationToken);
+        return content!;
+    }
 }

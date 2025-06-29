@@ -1,5 +1,6 @@
 ﻿using HP_Player_Console.API.Controller;
 using HP_Player_Console.Application.Requests.Users.Commands.BasicRegistration;
+using HP_Player_Console.Application.Requests.Users.Commands.BasicUpdateUser;
 using HP_Player_Console.Application.Requests.Users.Commands.BasicVerification;
 using HP_Player_Console.Application.Requests.Users.Queries.GetUserById;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +36,20 @@ public class UserController : ApiBaseController
     /// <returns></returns>
     [HttpPatch("basic/verification")]
     public async Task<ActionResult> Post([FromBody] BasicVerificationCommand command, CancellationToken cancellationToken)
+    {
+        var result = await Mediator.Send(command, cancellationToken);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Update user basic information
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    [HttpPatch("basic/update")]
+    [AllowAnonymous]
+    public async Task<ActionResult> BasicUpdateUser(BasicUpdateUserCommand command, CancellationToken cancellationToken)
     {
         var result = await Mediator.Send(command, cancellationToken);
         return Ok(result);
